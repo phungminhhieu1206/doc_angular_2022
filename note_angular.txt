@@ -1,0 +1,22 @@
+mkdir 01_typescript
+cd /01_typescript
+npm init --y
+npm install --save-dev typescript
+npx tsc --init: create file tsconfig.json to convert from ts to js
+npx tsc | npx tsc special_file.ts: compile file ts to js
+
+- một biến trong ts có một loại dữ liệu nhất định tại thời điểm biến đó được khởi tạo
+
+------------------------
+Set up và create project angular bằng angular cli
+npm install -g @angular/cli
+ng --version
+ng new name_new_project: create new project angular
+ng serve -o: chạy ứng dụng và open trên browser
+
+----------------------
+Tạo component:
++ tạo file
++ tạo class trong file
+ng g c components/content
+ng g c --skip-tests=true components/sidebar

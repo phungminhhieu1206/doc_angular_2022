@@ -1,0 +1,4 @@
+Todo-App:
+- create: ng new todo-app (N-routing)
+- runapp: ng serve -o
+- npm install bootstrap eva-icons
