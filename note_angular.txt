@@ -1,22 +1,89 @@
-mkdir 01_typescript
+imkdir 01_typescript
 cd /01_typescript
 npm init --y
 npm install --save-dev typescript
 npx tsc --init: create file tsconfig.json to convert from ts to js
-npx tsc | npx tsc special_file.ts: compile file ts to js
+npx tsc hoặc lệnh npx tsc special_file.ts: compile file ts to js
 
 - một biến trong ts có một loại dữ liệu nhất định tại thời điểm biến đó được khởi tạo
 
-------------------------
+-------------------------------
 Set up và create project angular bằng angular cli
 npm install -g @angular/cli
 ng --version
 ng new name_new_project: create new project angular
 ng serve -o: chạy ứng dụng và open trên browser
 
-----------------------
+-------------------------------
 Tạo component:
 + tạo file
 + tạo class trong file
 ng g c components/content
 ng g c --skip-tests=true components/sidebar
+
+-------------------------------
+*** Angular hoạt động ntn ? ***
+1. Module, Service, Component
+    - Module: Trung tâm của ứng dụng, mỗi app angular ít nhất một module - root/app Module: app.module.ts
+        + Một ứng dụng có thể phân chia nhiều app module.
+    - Component là những bộ phận của module giúp hiển thị ra ui/view với người dùng.
+        + Component trao đổi với nhau theo 2 TH:
+            * TH1: Component cha-con, anh-em họ
+            * TH2: Component không quan hệ huyết thống --> Giao tiêps thông qua: Service
+    - Service: Lớp phía trên component, là cầu nối giao tiếp giữa các component với nhau
+        + Thường service viết riêng cho từng module
+        + Những cũng có những trường hợp service dùng chung, xuyên suốt cho nhiều component thuộc nhiều module khác nhau.
+
+2. Câu trúc code:
+    - main.ts có bootstrapModule(AppModule) gắn root module vào, khởi động root module !
+    - Đi vào AppModule:
+        + Tất cả các tp trong Angular đều là class
+        + @Decorator: Một hàm nhận vào metadata giúp cho decorator biết được cần làm gì với class được khai báo này
+        + Mỗi @Decorator sẽ có metadata khác nhau, thông tin metadata trong AppModule có:
+            +1 declarations: Nơi khai báo các Component. [Một Component muốn hoạt động được, cần được khai báo trong 1 module nào đó !]
+                => Như vậy theo sơ đồ: Rõ ràng các component được khai báo trong cùng 1 module dễ dàng trao đổi với nhau thông qua services trong module đó
+            +2 imports: Nơi chứa các module khác như (BrowserModule, HttpClientModule) nhằm sử dụng các thành phần chức năng của các Module này trong module hiện tại import chúng
+                * BrowserModule: Cơ sở hạ tầng cơ bản của một ứng dụng web, cần import BrowserModule trong module được bootstrapModule nó
+                * RouterModule: Làm việc với router điều hướng trang
+            +3 providers: Nơi khai báo các services được sử dụng trong module này
+                * service nào mà không được khai báo ở đây thì các component thuộc module này sẽ ko sử dụng được
+            +4 bootstrap: [AppComponent]
+
+    - Đi vào AppComponent:
+        + @Decorator ở đây là @Component với metadata bắt buộc có các định nghĩa sau:
+            +1 selector: chứa tên của element-tag <app-root></app-root>. [Mỗi component đều phải có 1 selector làm định danh]
+            +2 templateUrl: chứa nội dung html giao diện
+        + 1 component - 1 html - 0/1/nhiều css. Trong component có thể chứa các thao tác, function xử lý nội bộ....???
+
+
+------------------------------- 
+*** Component ***
+- Sự thật: Có thể viết toàn bộ code của app vào 1 component !
+- Trong angular component có khái niệm: DataBinding (chia thành 2 loại: PropertyBinding và EventBinding):
+    + PropertyBinding: Là cách chuyền các biến trong class Component vào template html tương ứng trong file đó để hiển thị ra màn hình
+    + EventBinding: Là cách component luôn lắng nghe các event từ phía template html để đưa ra các action tương ứng.
+
+1. PropertyBinding:
+- export class AComponent {
+    public title: string = "Hello";
+    public urlImage: string = "https://image/img1.png"
+}
+    + Các để hiển thị biến title lên template html, ví dụ:
+    <h1>Tiêu đề là: {{title}}</h1> // Khái niệm: StringInterpolation !!!
+
+    + Ngoài ra có thể theo cách khác:
+    <h1>{{title}}</h1> tương đương với <h1 [textContent]="title"></h1>
+    <img src="{{urlImage}}"> tương đương với <img [src]="urlImage"> // SquareBrackets
+
+
+- Rồi giả sử sẽ có một sự kiện nào đó giúp thay đổi biến title --> khi đó event viết trong component.ts và template tự reder lại
+
+2. EventBinding:
+- Việc bắt một sự kiện nào đó ở template html sau đó xử lý ở method của class Component chứa template đó
+- <button>Login</button> // Bình thường với JS: addEventListener('click')
+    + Trong Angular, sử dụng: eventBinding như sau: <button (click)="onClickHander()"></button> Trong đó onClickHander() là hàm xử lý viết ở trong class Component tương ứng
+
+-------------------------------
+*** Life-Cycle Hooks ***
+- Những hàm, pattent <tự động chạy> dựa trên một sự kiện nào đó xảy ra trên cái Component của mình, ví dụ: Khi component được khởi tạo chẳng hạn, ...
+
