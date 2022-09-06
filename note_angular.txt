@@ -107,5 +107,12 @@ ng g c --skip-tests=true components/sidebar
     + Sau đó có thể dùng giá trị đó để thay đổi bất cứ thuộc tính nào của cha.
 
 - Component anh-chị-em họ cùng cha, tức đều gắn tag html trong html cha, làm sao để trao đổi trực tiếp giữa các anh chị em mà không cần thông qua component cha?
-
-
+    + Service: Một lớp nằm trên toàn bộ components thuộc 1 module nào đấy (Tức: Tất cả các component được declarations trong module đó đều có thể sử dụng được service đó !)
+        * Nếu khai báo service trong appmodule chứa 3 component: appcomponent, hellocomponent, hicomponent thì hệ thống sẽ tạo 1 instance service dùng chung cho cả 3 component
+        * Nếu khai báo service trong component riêng, ví dụ provices: [DataService] trong hellocomponent thì hệ thống sẽ tạo 1 instance service riêng cho component này.
+        * Hoặc từ Angular 6 trở lên: Trong metadata khai báo cho @Injection của Service, thuộc tính: providedIn: "root" (nếu có) thì service đó sẽ được dùng cho toàn bộ app của mình mà không cần khai báo thêm ở đâu khác !
+    + ng g s --skip-tests=true services/data-bridge
+    + Khai báo 1 service, chứa biến textFromHello dùng chung cho 2 component Hello và Hi.
+        * Trong service có 2 hàm getter và setter cho biến này
+        * Khi setter lần nữa cho biến chung trên trong HelloComponent, thì tại HiComponent không thay đổi được
+        => Giải pháp: rxjs !

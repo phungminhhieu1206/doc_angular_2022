@@ -10,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
       [text]="title"
       (buttonClicked)="onButtonClickedFromHelloComponent($event)"
     ></app-hello>
+    <app-hi></app-hi>
   `,
   styleUrls: ['./app.component.scss'],
 })

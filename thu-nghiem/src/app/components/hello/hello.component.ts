@@ -1,16 +1,27 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-hello',
   template: `
     <h1>Day la component hello</h1>
-    <p>Du lieu lay tu component cha: {{ text }}</p>
+    <p>Component Hello: {{ text }}</p>
     <button (click)="onButtonClicked()">Button Con</button>
   `,
 })
-export class HelloComponent implements OnInit {
+export class HelloComponent implements OnInit, OnChanges {
   @Input() text: string | undefined;
   @Output() buttonClicked: EventEmitter<string> = new EventEmitter<string>();
+
+  constructor(private _dataService: DataService) {}
 
   onButtonClicked() {
     console.log('Button in Hello component is clicked');
@@ -19,5 +30,8 @@ export class HelloComponent implements OnInit {
   }
   ngOnInit(): void {
     console.log('HelloComponent Con OnInit Ran');
+    this._dataService.setTextFromHello(this.text);
   }
+
+  ngOnChanges(changes: SimpleChanges): void {}
 }
