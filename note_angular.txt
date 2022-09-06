@@ -87,3 +87,10 @@ ng g c --skip-tests=true components/sidebar
 *** Life-Cycle Hooks ***
 - Những hàm, pattent <tự động chạy> dựa trên một sự kiện nào đó xảy ra trên cái Component của mình, ví dụ: Khi component được khởi tạo chẳng hạn, ...
 
+-- updating.........
+
+-------------------------------
+*** Communication ***
+- @Input: giúp truyền dữ liệu từ component cha --> component con
+- @Output: giúp truyền dữ liệu từ component con --> component cha
+
