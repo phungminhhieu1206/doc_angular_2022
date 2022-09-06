@@ -92,5 +92,20 @@ ng g c --skip-tests=true components/sidebar
 -------------------------------
 *** Communication ***
 - @Input: giúp truyền dữ liệu từ component cha --> component con
-- @Output: giúp truyền dữ liệu từ component con --> component cha
+- @Output: đẩy một event lên component cha để component cha quản lý sự kiện đó !
+    + Giả sử, khi click vào 1 item nào đó của thằng con, truyền id của nó ra thằng cha để hiện thông báo chẳng hạn
+
+- Component cha:
+    + Chứa biến title
+    + Chứa sự kiện khi click button của cha thì thay đổi biến title
+    + Biến này được truyền vào component con thông qua thuộc tính của component con được định nghĩa tại @Input() trong nó là text
+    + Khi component con có dữ liệu được truyền vào text, nó hiển thị ra html của nó thông qua thuộc tính text của nó
+- Component con:
+    + Chứa sự kiện click button của con, thay đổi biến text của nó
+    + Sự kiện này gọi đến sự kiện bắn dữ liệu ra component cha thông qua @Output(), buttonClicked.emit();
+    + Đẩy giá trị event ra cho thằng cha, thằng cha nhận được giá trị của thằng con thông qua sự kiện được khai báo trong thằng cha là onButtonClickedFromHelloComponent()
+    + Sau đó có thể dùng giá trị đó để thay đổi bất cứ thuộc tính nào của cha.
+
+- Component anh-chị-em họ cùng cha, tức đều gắn tag html trong html cha, làm sao để trao đổi trực tiếp giữa các anh chị em mà không cần thông qua component cha?
+
 
